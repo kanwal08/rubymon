@@ -1,0 +1,30 @@
+<%= form_for([@user, @monster]) do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name%>
+  </p>
+
+  <p>
+    <%= f.label :power %><br>
+    <%= f.text_field :power %>
+  </p>
+  
+  <p>
+    <%= f.fields_for :team_attributes do |team| %>
+      <%= team.label :name, "Team" %><br>
+      <%= team.text_field :name, value: @monster.team.try(:name) %>
+    <%end%>
+  </p>
+  
+  <p>
+    <%= f.label :type %><br>
+    <%= f.select :monster_type_id, options_for_select(MonsterType.all.map{|m| [m.name.titleize, m.id]}) %>
+  </p>
+  
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', root_path %>
